@@ -25,6 +25,7 @@ def fetch_page(url: str, cache_filename: str) -> str:
     headers = { "User-Agent": USER_AGENT }
     
     response = requests.get(url, headers=headers, timeout=TIMEOUT_SECONDS)
+    response.encoding = "utf-8"
     
     #3. if it's not 200, then throw an error()
     if response.status_code != 200: 

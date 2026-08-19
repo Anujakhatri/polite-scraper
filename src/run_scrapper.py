@@ -38,11 +38,6 @@ def run() -> None:
     
     unique_urls, pages_visited, source_page_map = discover_all_book_urls(max_pages=3)
     
-# test only 
-    fake_url = "https://books.toscrape.com/catalogue/this-book-does-not-exist_9999/index.html"
-    unique_urls.append(fake_url)
-    source_page_map[fake_url] = "https://books.toscrape.com/catalogue/page-1.html"
-    
     raw_records, failed_pages = extract_all_books_safely(unique_urls, source_page_map)
     result = validate_and_store(raw_records)
     duration_seconds = round(time.time() - start_time,2)

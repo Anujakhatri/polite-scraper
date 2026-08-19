@@ -35,8 +35,9 @@ def find_next_page_url(html: str, page_url: str) -> str | None:
     return None
 
 
-def discover_all_book_urls(max_pages: int | None = None) -> list[str]:
+def discover_all_book_urls(max_pages: int | None = None) -> tuple[list[str], int, dict]:
     all_links = []
+    source_page_map = {}
     current_url = CATALOGUE_START_URL
     page_number = 1
     
@@ -50,15 +51,19 @@ def discover_all_book_urls(max_pages: int | None = None) -> list[str]:
         page_links = extract_book_links(html, current_url)
         all_links.extend(page_links)
         
+        for link in page_links:
+            if link not in source_page_map:
+                source_page_map[link] = current_url
+        
         current_url = find_next_page_url(html, current_url)
         page_number += 1
     
     unique_links = list(dict.fromkeys(all_links))
-    return unique_links, page_number - 1
+    return unique_links, page_number - 1, source_page_map
 
 
 if __name__ == "__main__":
-    unique_urls, pages_visited = discover_all_book_urls(max_pages=3)
+    unique_urls, pages_visited, source_page_map = discover_all_book_urls(max_pages=3)
 
     print(f"\ncatalogue_pages={pages_visited}")
     print(f"discovered={len(unique_urls)}")

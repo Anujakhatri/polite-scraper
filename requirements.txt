@@ -1,2 +1,4 @@
 requests==2.34.2
 beautifulsoup4==4.15.0
+urllib3==2.7.0
+pydantic==2.13.4

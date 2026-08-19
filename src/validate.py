@@ -56,7 +56,7 @@ def validate_record(raw_record: dict) -> tuple[Optional[dict], Optional[str]]:
         
 def validate_and_store(raw_records: list[dict]) -> dict:
     valid_records_by_url = {}
-    error_records = {}
+    error_records = []
     
     for raw_record in raw_records:
         clean_record, error_reason = validate_record(raw_record)
